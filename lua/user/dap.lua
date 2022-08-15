@@ -1,0 +1,1 @@
+-- require('dap-python').setup('/opt/homebrew/lib/python3.9/site-packages')
