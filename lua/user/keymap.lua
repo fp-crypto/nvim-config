@@ -29,5 +29,6 @@ keymap("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", opts)
 
 keymap("n", "<leader>tt", "<cmd>NvimTreeToggle<cr>", opts)
 
--- "nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting_sync()<cr>", opts)
 
+-- "nnoremap <silent> <leader> :WhichKey '<Space>'<CR>

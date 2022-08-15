@@ -1,55 +1,100 @@
-vim.cmd [[
+local fn = vim.fn
 
-call plug#begin()
+-- Automatically install packer
+local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+if fn.empty(fn.glob(install_path)) > 0 then
+	PACKER_BOOTSTRAP = fn.system({
+		"git",
+		"clone",
+		"--depth",
+		"1",
+		"https://github.com/wbthomason/packer.nvim",
+		install_path,
+	})
+	print("Installing packer close and reopen Neovim...")
+	vim.cmd([[packadd packer.nvim]])
+end
 
-Plug 'lifepillar/vim-solarized8'
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+-- Autocommand that reloads neovim whenever you save the plugins.lua file
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+  augroup end
+]])
 
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'kyazdani42/nvim-tree.lua'
+-- Use a protected call so we don't error out on first use
+local status_ok, packer = pcall(require, "packer")
+if not status_ok then
+	return
+end
 
-Plug 'Yggdroot/indentLine'
+-- Have packer use a popup window
+packer.init({
+	display = {
+		open_fn = function()
+			return require("packer.util").float({ border = "rounded" })
+		end,
+	},
+})
 
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'kdheepak/tabline.nvim'
+return require("packer").startup(function(use)
+	-- Plugin Mangager
+	use("wbthomason/packer.nvim") -- Have packer manage itself
 
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
+	-- use 'lifepillar/vim-solarized8'
+	use({ "folke/tokyonight.nvim", branch = "main" })
 
-Plug 'airblade/vim-gitgutter'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+	use("kyazdani42/nvim-web-devicons")
+	use("kyazdani42/nvim-tree.lua")
 
-Plug 'TovarishFin/vim-solidity'
-Plug 'vyperlang/vim-vyper'
+	use("Yggdroot/indentLine")
 
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
+	use("nvim-lualine/lualine.nvim")
+	use("kdheepak/tabline.nvim")
 
-" Install nvim-cmp
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'saadparwaiz1/cmp_luasnip'
-Plug 'L3MON4D3/LuaSnip'
-Plug 'rafamadriz/friendly-snippets'
+	use 'tpope/vim-fugitive'
+	-- use 'tpope/vim-rhubarb'
+	-- use("airblade/vim-gitgutter")
+	use("lewis6991/gitsigns.nvim")
+	use("pwntester/octo.nvim")
 
-" Install treesitter
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
+	use("TovarishFin/vim-solidity")
+	use("vyperlang/vim-vyper")
 
-" Install dap
-Plug 'mfussenegger/nvim-dap'
-Plug 'rcarriga/nvim-dap-ui'
-Plug 'theHamsta/nvim-dap-virtual-text'
-Plug 'mfussenegger/nvim-dap-python'
+	use("nvim-lua/plenary.nvim")
+	use("nvim-lua/popup.nvim")
+	use("nvim-telescope/telescope.nvim")
 
-Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+	-- Install nvim-cmp
+	use("neovim/nvim-lspconfig")
+	use("hrsh7th/nvim-cmp")
+	use("hrsh7th/cmp-buffer")
+	use("hrsh7th/cmp-path")
+	use("hrsh7th/cmp-nvim-lsp")
+	use("saadparwaiz1/cmp_luasnip")
+	use("L3MON4D3/LuaSnip")
+	use("rafamadriz/friendly-snippets")
+	use("jose-elias-alvarez/null-ls.nvim")
 
-Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
+	-- Install treesitter
+	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 
+	-- Install dap
+	use("mfussenegger/nvim-dap")
+	use("rcarriga/nvim-dap-ui")
+	use("theHamsta/nvim-dap-virtual-text")
+	use("mfussenegger/nvim-dap-python")
 
-call plug#end()
+	-- Keybinding
+	use("folke/which-key.nvim")
 
+	-- Want?
+	use({ "akinsho/toggleterm.nvim", tag = "v2.*" })
 
-]]
+	-- Automatically set up your configuration after cloning packer.nvim
+	-- Put this at the end after all plugins
+	if PACKER_BOOTSTRAP then
+		require("packer").sync()
+	end
+end)
