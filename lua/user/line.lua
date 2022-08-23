@@ -1,6 +1,7 @@
 require('lualine').setup {
   options = {
-    theme = "auto"
+    theme = "auto",
+		disabled_filetypes = { "NvimTree" },
   }
 }
 require('tabline').setup()

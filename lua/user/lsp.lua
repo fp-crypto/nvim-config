@@ -1,4 +1,10 @@
 local lspcfg = require('lspconfig')
+
+-- local opts = {
+-- 		on_attach = require("user.lsp.handlers").on_attach,
+-- 		capabilities = require("user.lsp.handlers").capabilities,
+-- }
+
 lspcfg.pyright.setup{}
 lspcfg.solidity_ls.setup{}
 lspcfg.sumneko_lua.setup {

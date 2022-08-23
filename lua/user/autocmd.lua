@@ -13,7 +13,17 @@ vim.cmd [[
 
   augroup _solidity
     autocmd!
-    autocmd BufNewFile,BufRead *.sol setlocal ts=4 sts=4 sw=4 expandtab
-  augroup END
+    autocmd FileType solidity setlocal ts=4 sts=4 sw=4 expandtab
+  augroup end
+
+  augroup _json
+    autocmd!
+    autocmd bufnewfile,bufread *.json setlocal conceallevel=0
+  augroup end
+
+  augroup _docker
+    autocmd!
+    autocmd bufnewfile,bufread Dockerfile setlocal conceallevel=0
+  augroup end
 
 ]]

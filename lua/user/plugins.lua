@@ -53,11 +53,9 @@ return require("packer").startup(function(use)
 	use("nvim-lualine/lualine.nvim")
 	use("kdheepak/tabline.nvim")
 
-	use 'tpope/vim-fugitive'
-	-- use 'tpope/vim-rhubarb'
-	-- use("airblade/vim-gitgutter")
+	use("tpope/vim-fugitive")
+	use("tpope/vim-rhubarb")
 	use("lewis6991/gitsigns.nvim")
-	use("pwntester/octo.nvim")
 
 	use("TovarishFin/vim-solidity")
 	use("vyperlang/vim-vyper")
@@ -79,6 +77,8 @@ return require("packer").startup(function(use)
 
 	-- Install treesitter
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+  use("p00f/nvim-ts-rainbow")
+  use("windwp/nvim-autopairs")
 
 	-- Install dap
 	use("mfussenegger/nvim-dap")
