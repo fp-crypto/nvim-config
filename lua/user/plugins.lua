@@ -51,7 +51,8 @@ return require("packer").startup(function(use)
 	use("Yggdroot/indentLine")
 
 	use("nvim-lualine/lualine.nvim")
-	use("kdheepak/tabline.nvim")
+	--use("kdheepak/tabline.nvim")
+	--use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
 
 	use("tpope/vim-fugitive")
 	use("tpope/vim-rhubarb")
@@ -77,8 +78,11 @@ return require("packer").startup(function(use)
 
 	-- Install treesitter
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
-  use("p00f/nvim-ts-rainbow")
-  use("windwp/nvim-autopairs")
+	use("p00f/nvim-ts-rainbow")
+	use("nvim-treesitter/playground")
+	use("windwp/nvim-autopairs")
+
+  use("RRethy/vim-illuminate")
 
 	-- Install dap
 	use("mfussenegger/nvim-dap")

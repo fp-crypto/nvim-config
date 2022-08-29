@@ -1,7 +1,17 @@
-require('lualine').setup {
-  options = {
-    theme = "auto",
-		disabled_filetypes = { "NvimTree" },
-  }
-}
-require('tabline').setup()
+require("lualine").setup({
+	options = {
+		theme = "auto",
+		disabled_filetypes = {
+			statusline = { "NvimTree" },
+			tabline = { "NvimTree" },
+		},
+	},
+	tabline = {
+		lualine_a = { "buffers" },
+		lualine_b = {},
+		lualine_c = {},
+		lualine_x = {},
+		lualine_y = {},
+		lualine_z = { "tabs" },
+	},
+})
