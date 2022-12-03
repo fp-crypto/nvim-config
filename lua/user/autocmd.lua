@@ -1,10 +1,21 @@
-vim.cmd [[
+-- numbertoggle: relative lines is normal mode, absolute in insert mode
+vim.api.nvim_create_augroup("numbertoggle", { clear = true })
+vim.api.nvim_create_autocmd(
+	{ "BufEnter", "FocusGained", "InsertLeave" },
+	{ group = "numbertoggle", command = "set relativenumber" }
+)
+vim.api.nvim_create_autocmd(
+	{ "BufLeave", "FocusLost", "InsertEnter" },
+	{ group = "numbertoggle", command = "set norelativenumber" }
+)
 
-  augroup numbertoggle
-    autocmd!
-    autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-    autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-  augroup END
+vim.cmd([[
+
+  " augroup numbertoggle
+  "   autocmd!
+  "   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  "   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+  " augroup END
 
   augroup _yaml
     autocmd!
@@ -26,4 +37,10 @@ vim.cmd [[
     autocmd bufnewfile,bufread Dockerfile setlocal conceallevel=0
   augroup end
 
-]]
+  augroup _lua
+    autocmd!
+    autocmd BufWritePre,FileWritePre *.lua Format
+  augroup end
+
+
+]])

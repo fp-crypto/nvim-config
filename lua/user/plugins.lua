@@ -82,7 +82,7 @@ return require("packer").startup(function(use)
 	use("nvim-treesitter/playground")
 	use("windwp/nvim-autopairs")
 
-  use("RRethy/vim-illuminate")
+	use("RRethy/vim-illuminate")
 
 	-- Install dap
 	use("mfussenegger/nvim-dap")

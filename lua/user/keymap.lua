@@ -16,7 +16,7 @@ vim.g.maplocalleader = " "
 
 -- basic shortcuts
 keymap("n", "<leader>d", ":bd<cr>", opts)
-keymap("n", "<leader>s", ":so %<cr>", opts)
+keymap("n", "<leader>so", ":so %<cr>", opts)
 keymap("n", "<Leader>k", ":bn<cr>", opts)
 keymap("n", "<Leader>j", ":bp<cr>", opts)
 keymap("n", "<leader>w", ":w<cr>", opts)
@@ -36,4 +36,5 @@ keymap("n", "<leader>dn", "<cmd>lua vim.diagnostic.goto_next()<cr>", opts)
 keymap("n", "<leader>dp", "<cmd>lua vim.diagnostic.goto_next()<cr>", opts)
 
 keymap("n", "<leader>p", ":Format<cr>", opts)
+keymap("v", "<leader>p", ":FormatSelection<cr>", opts)
 -- "nnoremap <silent> <leader> :WhichKey '<Space>'<CR>

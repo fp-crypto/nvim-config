@@ -24,9 +24,11 @@ lspcfg.sumneko_lua.setup({
 		client,
 		_ --[[buffer--]]
 	)
-		client.resolved_capabilities.document_formatting = false -- don't use semneko formatting
+		client.server_capabilities.document_formatting = false -- don't use semneko formatting
 	end,
 })
+lspcfg.vimls.setup({})
+lspcfg.tsserver.setup({})
 
 local null_ls = require("null-ls")
 local formatting = null_ls.builtins.formatting
@@ -44,4 +46,5 @@ require("null-ls").setup({
 	},
 })
 
-vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting_sync()' ]])
+vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format()' ]])
+--vim.cmd([[ command! FormatSelection execute 'lua vim.lsp.buf.format()' ]])

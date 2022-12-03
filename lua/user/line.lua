@@ -7,7 +7,14 @@ require("lualine").setup({
 		},
 	},
 	tabline = {
-		lualine_a = { "buffers" },
+		lualine_a = {
+			{
+				"buffers",
+				filetype_names = {
+					NvimTree = "NvimTree",
+				},
+			},
+		},
 		lualine_b = {},
 		lualine_c = {},
 		lualine_x = {},
