@@ -42,13 +42,12 @@ return require("packer").startup(function(use)
 	-- Plugin Mangager
 	use("wbthomason/packer.nvim") -- Have packer manage itself
 
-	-- use 'lifepillar/vim-solarized8'
-	use({ "folke/tokyonight.nvim", branch = "main" })
+	use("folke/tokyonight.nvim")
 
 	use("kyazdani42/nvim-web-devicons")
 	use("kyazdani42/nvim-tree.lua")
 
-	use("Yggdroot/indentLine")
+	use("lukas-reineke/indent-blankline.nvim")
 
 	use("nvim-lualine/lualine.nvim")
 	--use("kdheepak/tabline.nvim")
@@ -60,6 +59,7 @@ return require("packer").startup(function(use)
 
 	use("TovarishFin/vim-solidity")
 	use("vyperlang/vim-vyper")
+	use({ "starkware-libs/cairo-lang", rtp = "src/starkware/cairo/lang/ide/vim" })
 
 	use("nvim-lua/plenary.nvim")
 	use("nvim-lua/popup.nvim")

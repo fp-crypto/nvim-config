@@ -9,6 +9,13 @@ vim.api.nvim_create_autocmd(
 	{ group = "numbertoggle", command = "set norelativenumber" }
 )
 
+-- cairo detection
+vim.api.nvim_create_augroup("_cairo", { clear = true })
+vim.api.nvim_create_autocmd(
+	{ "BufNewFile", "BufRead" },
+	{ pattern = "*.cairo", command = "set filetype=cairo", group = "_cairo" }
+)
+
 vim.cmd([[
 
   " augroup numbertoggle
@@ -25,11 +32,6 @@ vim.cmd([[
   augroup _solidity
     autocmd!
     autocmd FileType solidity setlocal ts=4 sts=4 sw=4 expandtab
-  augroup end
-
-  augroup _json
-    autocmd!
-    autocmd bufnewfile,bufread *.json setlocal conceallevel=0
   augroup end
 
   augroup _docker
