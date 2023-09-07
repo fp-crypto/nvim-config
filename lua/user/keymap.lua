@@ -36,5 +36,13 @@ keymap("n", "<leader>dn", "<cmd>lua vim.diagnostic.goto_next()<cr>", opts)
 keymap("n", "<leader>dp", "<cmd>lua vim.diagnostic.goto_next()<cr>", opts)
 
 keymap("n", "<leader>p", ":Format<cr>", opts)
-keymap("v", "<leader>p", ":FormatSelection<cr>", opts)
+keymap("v", "<leader>p", ":Format<cr>", opts)
 -- "nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+--keymap("n", "<leader>", ":WhichKey <space><cr>", opts)
+
+-- "nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+-- Use ctrl-[hjkl] to select the active split!
+keymap("n", "<c-k>", "<cmd>wincmd k<cr>", opts)
+keymap("n", "<c-j>", "<cmd>wincmd j<cr>", opts)
+keymap("n", "<c-h>", "<cmd>wincmd h<cr>", opts)
+keymap("n", "<c-l>", "<cmd>wincmd l<cr>", opts)

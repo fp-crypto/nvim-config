@@ -42,6 +42,7 @@ return require("packer").startup(function(use)
 	-- Plugin Mangager
 	use("wbthomason/packer.nvim") -- Have packer manage itself
 
+	-- theme
 	use("folke/tokyonight.nvim")
 
 	use("kyazdani42/nvim-web-devicons")
@@ -53,10 +54,12 @@ return require("packer").startup(function(use)
 	--use("kdheepak/tabline.nvim")
 	--use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
 
+	-- git stuff
 	use("tpope/vim-fugitive")
 	use("tpope/vim-rhubarb")
 	use("lewis6991/gitsigns.nvim")
 
+	-- smart contract dev
 	use("TovarishFin/vim-solidity")
 	use("vyperlang/vim-vyper")
 	use({ "starkware-libs/cairo-lang", rtp = "src/starkware/cairo/lang/ide/vim" })
@@ -65,12 +68,21 @@ return require("packer").startup(function(use)
 	use("nvim-lua/popup.nvim")
 	use("nvim-telescope/telescope.nvim")
 
+	-- Install Lsp Stuff
+	use({
+		"williamboman/mason.nvim",
+		"williamboman/mason-lspconfig.nvim",
+		"neovim/nvim-lspconfig",
+	})
+
 	-- Install nvim-cmp
-	use("neovim/nvim-lspconfig")
-	use("hrsh7th/nvim-cmp")
-	use("hrsh7th/cmp-buffer")
-	use("hrsh7th/cmp-path")
-	use("hrsh7th/cmp-nvim-lsp")
+	use({
+
+		"hrsh7th/nvim-cmp",
+		"hrsh7th/cmp-buffer",
+		"hrsh7th/cmp-path",
+		"hrsh7th/cmp-nvim-lsp",
+	})
 	use("saadparwaiz1/cmp_luasnip")
 	use("L3MON4D3/LuaSnip")
 	use("rafamadriz/friendly-snippets")
@@ -91,10 +103,22 @@ return require("packer").startup(function(use)
 	use("mfussenegger/nvim-dap-python")
 
 	-- Keybinding
-	use("folke/which-key.nvim")
+	use({
+		"folke/which-key.nvim",
+		config = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+			require("which-key").setup({
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+			})
+		end,
+	})
+
+	use("folke/trouble.nvim")
 
 	-- Want?
-	use({ "akinsho/toggleterm.nvim", tag = "v2.*" })
+	-- use({ "akinsho/toggleterm.nvim", tag = "v2.*" })
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

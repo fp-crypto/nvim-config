@@ -1,48 +1,42 @@
+local augroup = function(name)
+	vim.api.nvim_create_augroup(name, {})
+end
+
+local autocmd = vim.api.nvim_create_autocmd
+
 -- numbertoggle: relative lines is normal mode, absolute in insert mode
-vim.api.nvim_create_augroup("numbertoggle", { clear = true })
-vim.api.nvim_create_autocmd(
-	{ "BufEnter", "FocusGained", "InsertLeave" },
-	{ group = "numbertoggle", command = "set relativenumber" }
-)
-vim.api.nvim_create_autocmd(
-	{ "BufLeave", "FocusLost", "InsertEnter" },
-	{ group = "numbertoggle", command = "set norelativenumber" }
-)
+augroup("numbertoggle")
+autocmd({ "BufEnter", "FocusGained", "InsertLeave" }, { group = "numbertoggle", command = "set relativenumber" })
+autocmd({ "BufLeave", "FocusLost", "InsertEnter" }, { group = "numbertoggle", command = "set norelativenumber" })
 
 -- cairo detection
-vim.api.nvim_create_augroup("_cairo", { clear = true })
-vim.api.nvim_create_autocmd(
-	{ "BufNewFile", "BufRead" },
-	{ pattern = "*.cairo", command = "set filetype=cairo", group = "_cairo" }
-)
+augroup("_cairo")
+autocmd({ "BufNewFile", "BufRead" }, { pattern = "*.cairo", command = "set filetype=cairo", group = "_cairo" })
 
-vim.cmd([[
+-- lua autoformat
+augroup("_lua")
+autocmd({ "BufWritePre", "FileWritePre" }, { group = "_lua", pattern = "*.lua", command = "Format" })
 
-  " augroup numbertoggle
-  "   autocmd!
-  "   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  "   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-  " augroup END
+-- yaml settings
+augroup("_yaml")
+autocmd("FileType", {
+	group = "_yaml",
+	pattern = "yaml",
+	command = "setlocal ts=2 sts=2 sw=2 expandtab",
+})
 
-  augroup _yaml
-    autocmd!
-    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-  augroup END
+-- yaml settings
+augroup("_solidity")
+autocmd("FileType", {
+	group = "_solidity",
+	pattern = "solidity",
+	command = "setlocal ts=4 sts=4 sw=4 expandtab",
+})
 
-  augroup _solidity
-    autocmd!
-    autocmd FileType solidity setlocal ts=4 sts=4 sw=4 expandtab
-  augroup end
-
-  augroup _docker
-    autocmd!
-    autocmd bufnewfile,bufread Dockerfile setlocal conceallevel=0
-  augroup end
-
-  augroup _lua
-    autocmd!
-    autocmd BufWritePre,FileWritePre *.lua Format
-  augroup end
-
-
-]])
+-- dockerfile conceallevel
+augroup("_docker")
+autocmd("FileType", {
+	group = "_docker",
+	pattern = "dockerfile",
+	command = "setlocal conceallevel=0",
+})
