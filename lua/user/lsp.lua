@@ -2,10 +2,10 @@ require("mason").setup()
 require("mason-lspconfig").setup({
 	ensure_installed = {
 		"pyright",
-		"solidity",
+		"solidity_ls",
 		"lua_ls",
 		"vimls",
-		"tsserver",
+		"ts_ls",
 		"rust_analyzer",
 		"yamlls",
 	},
@@ -41,7 +41,7 @@ lspcfg.lua_ls.setup({
 	end,
 })
 lspcfg.vimls.setup({})
-lspcfg.tsserver.setup({})
+lspcfg.ts_ls.setup({})
 lspcfg.rust_analyzer.setup({})
 lspcfg.yamlls.setup({})
 

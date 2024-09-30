@@ -10,6 +10,7 @@ require("nvim-treesitter.configs").setup({
 		"json",
 		"javascript",
 	},
+	prefer_git = true,
 
 	highlight = {
 		-- `false` will disable the whole extension
