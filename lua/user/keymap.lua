@@ -35,8 +35,7 @@ keymap("n", "<leader>dd", "<cmd>lua vim.diagnostic.open_float()<cr>", opts)
 keymap("n", "<leader>dn", "<cmd>lua vim.diagnostic.goto_next()<cr>", opts)
 keymap("n", "<leader>dp", "<cmd>lua vim.diagnostic.goto_next()<cr>", opts)
 
-keymap("n", "<leader>p", ":Format<cr>", opts)
-keymap("v", "<leader>p", ":Format<cr>", opts)
+-- <leader>p formatting handled by conform.nvim in lazy.lua
 -- "nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 --keymap("n", "<leader>", ":WhichKey <space><cr>", opts)
 
