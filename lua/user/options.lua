@@ -17,11 +17,15 @@ local options = {
 	tabstop = 2, -- insert 2 spaces for a tab
 
 	backspace = { "indent", "eol", "start" },
+
+	list = true,
 }
 
 for k, v in pairs(options) do
 	vim.opt[k] = v
 end
+
+vim.opt.listchars:append("space:·")
 
 -- local g_options = {
 -- 	vim_json_conceal = 0,

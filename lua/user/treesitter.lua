@@ -24,16 +24,6 @@ require("nvim-treesitter.configs").setup({
 		additional_vim_regex_highlighting = { "solidity" },
 	},
 
-	-- rainbow config
-	rainbow = {
-		enable = true,
-		-- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-		extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-		max_file_lines = nil, -- Do not enable for files with more than n lines, int
-		-- colors = {}, -- table of hex strings
-		-- termcolors = {} -- table of colour name strings
-	},
-
 	-- playground config
 	playground = {
 		enable = true,
@@ -52,5 +42,14 @@ require("nvim-treesitter.configs").setup({
 			goto_node = "<cr>",
 			show_help = "?",
 		},
+	},
+})
+
+require("rainbow-delimiters.setup").setup({
+	strategy = {
+		[""] = "rainbow-delimiters.strategy.global",
+	},
+	query = {
+		[""] = "rainbow-delimiters",
 	},
 })

@@ -22,12 +22,12 @@ keymap("n", "<Leader>j", ":bp<cr>", opts)
 keymap("n", "<leader>w", ":w<cr>", opts)
 
 -- Telescope shortcuts
-keymap("n", "<leader>ft", "<cmd>Telescope<cr>", opts)
-keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
-keymap("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", opts)
-keymap("n", "<leader>fb", "<cmd>Telescope buffers<cr>", opts)
-keymap("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", opts)
-keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<cr>", opts)
+keymap("n", "<leader>ft", "<cmd>lua Snacks.picker()<cr>", opts)
+keymap("n", "<leader>ff", "<cmd>lua Snacks.picker.files()<cr>", opts)
+keymap("n", "<leader>fg", "<cmd>lua Snacks.picker.grep()<cr>", opts)
+keymap("n", "<leader>fb", "<cmd>lua Snacks.picker.buffers()<cr>", opts)
+keymap("n", "<leader>fh", "<cmd>lua Snacks.picker.help()<cr>", opts)
+keymap("n", "<leader>fd", "<cmd>lua Snacks.picker.diagnostics_buffer()<cr>", opts)
 
 keymap("n", "<leader>tt", "<cmd>NvimTreeToggle<cr>", opts)
 

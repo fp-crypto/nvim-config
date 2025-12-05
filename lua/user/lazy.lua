@@ -31,7 +31,10 @@ require("lazy").setup({
 			"nvim-treesitter/nvim-treesitter",
 			build = ":TSUpdate",
 			dependencies = {
-				{ "p00f/nvim-ts-rainbow" },
+				{
+					"hiphish/rainbow-delimiters.nvim",
+					submodules = false,
+				},
 				{ "nvim-treesitter/playground" },
 				{ "windwp/nvim-autopairs" },
 			},
@@ -63,11 +66,26 @@ require("lazy").setup({
 		{ "kyazdani42/nvim-web-devicons" },
 		{ "kyazdani42/nvim-tree.lua" },
 
-		{ "lukas-reineke/indent-blankline.nvim" },
+		{ "nvim-mini/mini.icons" },
 
 		{ "nvim-lualine/lualine.nvim" },
 		--{ "kdheepak/tabline.nvim" },
 		--use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
+		{
+			"folke/snacks.nvim",
+			priority = 1000,
+			lazy = false,
+			---@type snacks.Config
+			opts = {
+				bigfile = { enabled = true },
+				indent = { enabled = true },
+				gitbrowse = { enabled = true },
+				picker = { enabled = true },
+				scope = { enabled = true },
+				scroll = { enabled = true },
+				words = { enabled = true },
+			},
+		},
 
 		-- git stuff
 		{ "tpope/vim-fugitive" },
@@ -78,24 +96,29 @@ require("lazy").setup({
 		{ "TovarishFin/vim-solidity" },
 		{ "vyperlang/vim-vyper" },
 		--use({ "starkware-libs/cairo-lang", rtp = "src/starkware/cairo/lang/ide/vim" })
+		--
 		{ "nvim-lua/plenary.nvim" },
 		{ "nvim-lua/popup.nvim" },
-		{ "nvim-telescope/telescope.nvim" },
+
+		{
+			"andythigpen/nvim-coverage",
+			config = function()
+				require("coverage").setup()
+			end,
+		},
 
 		-- Install Lsp Stuff
 		{
-			"williamboman/mason.nvim",
-			dependencies = {
-				"williamboman/mason-lspconfig.nvim",
-				"neovim/nvim-lspconfig",
-			},
+			"mason-org/mason.nvim",
+			"mason-org/mason-lspconfig.nvim",
+			"neovim/nvim-lspconfig",
 		},
 
 		-- Install nvim-cmp
 		{
 			"hrsh7th/nvim-cmp",
 			-- load cmp on InsertEnter
-			event = "InsertEnter",
+			-- event = "InsertEnter",
 			-- these dependencies will only be loaded when cmp loads
 			-- dependencies are always lazy-loaded unless specified otherwise
 			dependencies = {
@@ -103,15 +126,31 @@ require("lazy").setup({
 				"hrsh7th/cmp-buffer",
 				"hrsh7th/cmp-path",
 			},
-			config = function()
-				-- ...
-			end,
 		},
 
 		{ "saadparwaiz1/cmp_luasnip" },
-		{ "L3MON4D3/LuaSnip" },
+		{
+			"L3MON4D3/LuaSnip",
+			-- follow latest release.
+			version = "v2.*",
+			-- install jsregexp (optional!).
+			build = "make install_jsregexp",
+		},
 		{ "rafamadriz/friendly-snippets" },
 		{ "nvimtools/none-ls.nvim" },
+
+		{
+			"folke/lazydev.nvim",
+			ft = "lua", -- only load on lua files
+			opts = {
+				library = {
+					-- See the configuration section for more details
+					-- Load luvit types when the `vim.uv` word is found
+					{ path = "luvit-meta/library", words = { "vim%.uv" } },
+				},
+			},
+		},
+		{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
 
 		{ "RRethy/vim-illuminate" },
 
@@ -137,52 +176,102 @@ require("lazy").setup({
 
 		{ "folke/trouble.nvim" },
 
+		-- Surround text objects (sa/sd/sr)
+		{ "echasnovski/mini.surround", version = "*", config = true },
+
+		-- Quick commenting (gcc/gc)
+		{ "numToStr/Comment.nvim", config = true },
+
+		-- Fast navigation (s/S)
 		{
-			"yetone/avante.nvim",
+			"folke/flash.nvim",
 			event = "VeryLazy",
-			lazy = false,
-			version = false, -- set this if you want to always pull the latest change
-			opts = {
-				-- add any opts here
-			},
-			-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-			build = "make",
-			-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-			dependencies = {
-				"nvim-treesitter/nvim-treesitter",
-				"stevearc/dressing.nvim",
-				"nvim-lua/plenary.nvim",
-				"MunifTanjim/nui.nvim",
-				--- The below dependencies are optional,
-				"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-				"zbirenbaum/copilot.lua", -- for providers='copilot'
-				{
-					-- support for image pasting
-					"HakonHarnes/img-clip.nvim",
-					event = "VeryLazy",
-					opts = {
-						-- recommended settings
-						default = {
-							embed_image_as_base64 = false,
-							prompt_for_file_name = false,
-							drag_and_drop = {
-								insert_mode = true,
-							},
-							-- required for Windows users
-							use_absolute_path = true,
-						},
-					},
-				},
-				{
-					-- Make sure to set this up properly if you have lazy=true
-					"MeanderingProgrammer/render-markdown.nvim",
-					opts = {
-						file_types = { "markdown", "Avante" },
-					},
-					ft = { "markdown", "Avante" },
-				},
+			opts = {},
+			keys = {
+				{ "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+				{ "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
 			},
 		},
+
+		{
+			"MeanderingProgrammer/render-markdown.nvim",
+			opts = {
+				file_types = { "markdown", "Avante" },
+			},
+			ft = { "markdown", "Avante" },
+			lazy = true,
+		},
+
+		-- {
+		-- 	"benlubas/molten-nvim",
+		-- 	version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
+		-- 	dependencies = {
+		-- 		{
+		-- 			-- see the image.nvim readme for more information about configuring this plugin
+		-- 			"3rd/image.nvim",
+		-- 			opts = {
+		-- 				backend = "kitty", -- whatever backend you would like to use
+		-- 				max_width = 100,
+		-- 				max_height = 12,
+		-- 				max_height_window_percentage = math.huge,
+		-- 				max_width_window_percentage = math.huge,
+		-- 				window_overlap_clear_enabled = true, -- toggles images when windows are overlapped
+		-- 				window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
+		-- 			},
+		-- 		},
+		-- 	},
+		-- 	build = ":UpdateRemotePlugins",
+		-- 	init = function()
+		-- 		-- these are examples, not defaults. Please see the readme
+		-- 		vim.g.molten_image_provider = "image.nvim"
+		-- 		vim.g.molten_output_win_max_height = 20
+		-- 	end,
+		-- },
+
+		-- {
+		-- 	"yetone/avante.nvim",
+		-- 	event = "VeryLazy",
+		-- 	lazy = false,
+		-- 	version = false, -- set this if you want to always pull the latest change
+		-- 	opts = {
+		-- 		-- add any opts here
+		-- 	},
+		-- 	build = "make",
+		-- 	dependencies = {
+		-- 		"nvim-treesitter/nvim-treesitter",
+		-- 		"stevearc/dressing.nvim",
+		-- 		"nvim-lua/plenary.nvim",
+		-- 		"MunifTanjim/nui.nvim",
+		-- 		--- The below dependencies are optional,
+		-- 		"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+		-- 		"zbirenbaum/copilot.lua", -- for providers='copilot'
+		-- 		{
+		-- 			-- support for image pasting
+		-- 			"HakonHarnes/img-clip.nvim",
+		-- 			event = "VeryLazy",
+		-- 			opts = {
+		-- 				-- recommended settings
+		-- 				default = {
+		-- 					embed_image_as_base64 = false,
+		-- 					prompt_for_file_name = false,
+		-- 					drag_and_drop = {
+		-- 						insert_mode = true,
+		-- 					},
+		-- 					-- required for Windows users
+		-- 					use_absolute_path = true,
+		-- 				},
+		-- 			},
+		-- 		},
+		-- 		{
+		-- 			-- Make sure to set this up properly if you have lazy=true
+		-- 			"MeanderingProgrammer/render-markdown.nvim",
+		-- 			opts = {
+		-- 				file_types = { "markdown", "Avante" },
+		-- 			},
+		-- 			ft = { "markdown", "Avante" },
+		-- 		},
+		-- 	},
+		-- },
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
