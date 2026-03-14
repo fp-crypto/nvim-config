@@ -13,10 +13,6 @@ autocmd({ "BufLeave", "FocusLost", "InsertEnter" }, { group = "numbertoggle", co
 augroup("_cairo")
 autocmd({ "BufNewFile", "BufRead" }, { pattern = "*.cairo", command = "set filetype=cairo", group = "_cairo" })
 
--- lua autoformat
-augroup("_lua")
-autocmd({ "BufWritePre", "FileWritePre" }, { group = "_lua", pattern = "*.lua", command = "Format" })
-
 -- yaml settings
 augroup("_yaml")
 autocmd("FileType", {

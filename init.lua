@@ -3,15 +3,11 @@ require("user.keymap")
 require("user.autocmd")
 require("user.lazy")
 require("user.treesitter")
-require("user.colors")
-require("user.line")
 require("user.nvimtree")
 require("user.lsp")
 require("user.cmp")
 require("user.autopairs")
-require("user.illuminate")
 require("user.dap")
-require("user.git")
 
 -- Load all macros from ~/.config/nvim/lua/user/macros/
 local macro_dir = vim.fn.stdpath("config") .. "/lua/user/macros"
