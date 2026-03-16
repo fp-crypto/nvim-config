@@ -1,4 +1,12 @@
 require("mason").setup()
+
+local mr = require("mason-registry")
+for _, name in ipairs({ "tree-sitter-cli" }) do
+	local pkg = mr.get_package(name)
+	if not pkg:is_installed() then
+		pkg:install()
+	end
+end
 require("mason-lspconfig").setup({
 	ensure_installed = {
 		"ty",
@@ -16,29 +24,11 @@ require("mason-lspconfig").setup({
 	automatic_enable = true,
 })
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+vim.lsp.config("*", {
+	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+})
 
-local lspcfg = vim.lsp.config
-
-lspcfg("ty", {})
---lspcfg("pyright", {
---	capabilities = capabilities,
---	settings = {
---		pyright = {
---			-- Using Ruff's import organizer
---			disableOrganizeImports = true,
---		},
---		python = {
---			analysis = {
---				-- Ignore all files for analysis to exclusively use Ruff for linting
---				-- ignore = { "*" },
---			},
---		},
---	},
---})
-lspcfg("ruff", {})
-lspcfg("solidity_ls", {})
-lspcfg("lua_ls", {
+vim.lsp.config("lua_ls", {
 	settings = {
 		Lua = {
 			runtime = {
@@ -52,28 +42,17 @@ lspcfg("lua_ls", {
 				globals = { "vim" },
 			},
 			workspace = {
-				-- Make the server aware of Neovim runtime files
 				library = vim.api.nvim_get_runtime_file("", true),
 			},
 			telemetry = {
 				enable = false,
 			},
-			capabilities = capabilities,
 		},
 	},
-	on_attach = function(
-		client,
-		_ --[[buffer--]]
-	)
-		client.server_capabilities.document_formatting = false -- don't use semneko formatting
+	on_attach = function(client, _)
+		client.server_capabilities.document_formatting = false
 	end,
 })
-lspcfg("vimls", {})
-lspcfg("ts_ls", {})
-lspcfg("rust_analyzer", {})
-lspcfg("yamlls", {})
-lspcfg("tombi", {})
-lspcfg("dockerls", {})
 
 -- Native document highlighting (replaces vim-illuminate)
 vim.api.nvim_create_autocmd("LspAttach", {
