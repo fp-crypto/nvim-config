@@ -7,10 +7,10 @@ for _, name in ipairs({ "tree-sitter-cli" }) do
 		pkg:install()
 	end
 end
+
 require("mason-lspconfig").setup({
 	ensure_installed = {
 		"ty",
-		--"pyright",
 		"ruff",
 		"solidity_ls",
 		"lua_ls",
